@@ -1,0 +1,164 @@
+// Buttons ====================================================================
+
+@mixin btn($class, $bg) {
+    .btn-#{$class}{
+        background-size: 200% 200%;
+        background-position: 50%;
+
+        &:focus {
+            background-color: $bg;
+        }
+
+        &:hover,
+        &:active:hover {
+            background-color: darken($bg, 6%);
+        }
+
+        &:active {
+            background-color: darken($bg, 12%);
+            @include gradient-radial(darken($bg, 12%) 10%, $bg 11%);
+            background-size: 1000% 1000%;
+            @include box-shadow(2px 2px 4px rgba(0, 0, 0, .4));
+        }
+
+    }
+
+}
+
+@include btn(default, $btn-default-bg);
+@include btn(primary, $btn-primary-bg);
+@include btn(success, $btn-success-bg);
+@include btn(info, $btn-info-bg);
+@include btn(warning, $btn-warning-bg);
+@include btn(danger, $btn-danger-bg);
+@include btn(link, #fff);
+
+.btn {
+    text-transform: uppercase;
+    //border: none;
+    //@include box-shadow(1px 1px 4px rgba(0, 0, 0, .4));
+    @include transition(all 0.4s);
+
+    &-link {
+        border-radius: $btn-border-radius-base;
+        @include box-shadow(none);
+        color: $btn-default-color;
+
+        &:hover,
+        &:focus {
+            @include box-shadow(none);
+            color: $btn-default-color;
+            text-decoration: none;
+        }
+
+    }
+
+    &-default {
+        &.disabled {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: rgba(0, 0, 0, 0.4);
+            opacity: 1;
+        }
+
+    }
+
+}
+
+.btn-group {
+    .btn + .btn,
+    .btn + .btn-group,
+    .btn-group + .btn,
+    .btn-group + .btn-group {
+        margin-left: 0;
+    }
+
+    &-vertical {
+        > .btn + .btn,
+        > .btn + .btn-group,
+        > .btn-group + .btn,
+        > .btn-group + .btn-group {
+            margin-top: 0;
+        }
+
+    }
+
+}
+
+// Typography =================================================================
+
+body {
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: .1px;
+}
+
+input,
+button {
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: .1px;
+}
+
+a {
+    @include transition(all 0.2s);
+}
+
+// Tables =====================================================================
+
+.table-hover {
+    > tbody > tr,
+    > tbody > tr > th,
+    > tbody > tr > td {
+        @include transition(all 0.2s);
+    }
+
+}
+
+// Progress bars ==============================================================
+
+.progress {
+    position: relative;
+    z-index: 1;
+    height: 6px;
+    border-radius: 0;
+    @include box-shadow(none);
+
+    &-bar {
+        @include box-shadow(none);
+
+        &:last-child {
+            border-radius: 0 3px 3px 0;
+        }
+
+        &:last-child {
+            &:before {
+                display: block;
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                right: 0;
+                z-index: -1;
+                background-color: lighten($progress-bar-bg, 35%);
+            }
+
+        }
+
+        &-success:last-child.progress-bar:before {
+            background-color: lighten($brand-success, 35%);
+        }
+
+        &-info:last-child.progress-bar:before {
+            background-color: lighten($brand-info, 45%);
+        }
+
+        &-warning:last-child.progress-bar:before {
+            background-color: lighten($brand-warning, 35%);
+        }
+
+        &-danger:last-child.progress-bar:before {
+            background-color: lighten($brand-danger, 25%);
+        }
+
+    }
+
+}

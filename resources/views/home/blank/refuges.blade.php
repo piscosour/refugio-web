@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>#NiUnaMenos</title>
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+		<script type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyA91Ls4vWMs7nr6t-Bp8B-zrQwao0MC9YY&sensor=true"></script>
+		<link rel="stylesheet" href="./css/bootstrap.css">
+		<style type="text/css">
+			#Map{
+				height: 400px;
+			}
+		</style>
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body id="App">
+
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Refugio :: #NiUnaMenos</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Link</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div>
+	</nav>
+
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6 col-sm-10 col-sm-offset-1">
+				<refuge></refuge>
+			</div>
+		</div>
+	</div>
+
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+	<template id="RefugeResource">
+
+		<section>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Registrar Refugio de Refugios</h3>
+				</div>
+				<div class="panel-body">
+					<form action="#" method="POST" id="Form" @submit.prevent="storeRefuge" class="form-horizontal" role="form">
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Nombre</label>
+							<div class="col-sm-10">
+								<input type="text" name="address" v-model="form.direccion" class="form-control" placeholder="Dirección" required="required">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Ubicación</label>
+							<div class="col-sm-10">
+								<div id="Map">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Capacidad</label>
+							<div class="col-sm-10">
+								<select name="capacity" v-model="form.capacidad" class="form-control" required="required" number>
+									<option value="">Seleccione</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Complejidad</label>
+							<div class="col-sm-10">
+								<select name="complexity" v-model="form.complejidad" class="form-control" required="required" number>
+									<option value="">Seleccione</option>
+									<option value="1">Riesgo</option>
+									<option value="2">Amenaza</option>
+									<option value="3">Violencia</option>
+									<option value="4">Emergencia</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Disponibilidad</label>
+							<div class="col-sm-10">
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Lunes">
+										Lunes
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Martes">
+										Martes
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Miercoles">
+										Miercoles
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Jueves">
+										Jueves
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Viernes">
+										Viernes
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Sabado">
+										Sábado
+									</label>
+								</div>
+								<div class="checkbox">
+									<label>
+										<input type="checkbox" name="availability[]" v-model="form.disponibilidad" value="Domingo">
+										Domingo
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="text-right">
+							<button type="submit" class="btn btn-primary">Registrar</button>
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Refugios</h3>
+				</div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-hover table-bordered">
+							<thead>
+								<tr>
+									<th>Key ID</th>
+									<th>Nombre</th>
+									<th>Ubicación</th>
+									<th>Capacidad de Personas</th>
+									<th>Complejidad de Violencia</th>
+									<th>Disponibilidad</th>
+									<th>Eliminar</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="item in collection">
+									<td>@{{ item['.key'] }}</td>
+									<td>@{{ item.direccion }}</td>
+									<td>@{{ item.latitud }} <br> @{{ item.longitud }}</td>
+									<td>@{{ item.capacidad }}</td>
+									<td>@{{ item.complejidad | complexity }}</td>
+									<td>
+										<ul class="pagination">
+											<li v-for="day in item.disponibilidad">
+												<span>@{{ day }}</span>
+											</li>
+										</ul>
+									</td>
+									<td>
+										<button type="button" @click="removeRefuge(item['.key'])" class="btn btn-danger">Eliminar</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+
+    </template>
+
+
+	<script src="//code.jquery.com/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+	<script src="https://cdn.jsdelivr.net/vuefire/1.0.0/vuefire.min.js"></script>
+
+	<script src="./js/maps.js"></script>
+
+	<script type="text/javascript">
+
+		var firebaseConnection = new Firebase("https://refugio-d50d1.firebaseio.com/refuges");
+
+		var map;
+
+		Vue.filter('complexity', function (value) {
+
+			var complejidad = '';
+
+			switch(value) {
+			    case 1:
+			        complejidad = "Riesgo";
+			        break;
+			    case 2:
+			        complejidad = "Amenaza";
+			        break;
+			    case 3:
+			        complejidad = "Violencia";
+			        break;
+			    case 4:
+			        complejidad = "Emergencia";
+			        break;
+			    default:
+			        complejidad = "No registrada";
+			}
+
+		  	return complejidad;
+		})
+
+		var Refuge = Vue.extend({
+
+		    template: '#RefugeResource',
+
+		    ready: function() {
+
+		    	map = new GMaps({
+            		div : '#Map',
+		            lat : -12.0971829,
+		            lng : -77.03258499999998,
+		            zoom: 13
+		        });
+
+		        map.addMarker({
+					lat : -12.0971829,
+		            lng : -77.03258499999998,
+					draggable: true,
+				});
+
+		    },
+
+		    data : function(){
+
+		    	return {
+
+					form : {
+						direccion      : '',
+						latitud        : '',
+						longitud       : '',
+						capacidad      : 0,
+						complejidad    : '',
+						disponibilidad : []
+					}
+
+		    	};
+
+		    },
+
+		    methods : {
+
+		    	storeRefuge : function(){
+
+		    		var position = map.markers[0].getPosition();
+
+					this.form.latitud  = position.lat();
+					this.form.longitud = position.lng();
+
+		    		this.$nextTick(function(){
+
+		    			firebaseConnection.push(this.form);
+
+		    		});
+
+		    	},
+		    	editRefuge : function(item, event){
+
+		    	},
+		    	updateRefuge : function(){
+
+		    	},
+		    	removeRefuge : function(key){
+
+		    		firebaseConnection.child(key).remove();
+		    	}
+		    },
+
+		    firebase: {
+
+			    collection: firebaseConnection.limitToLast(20)
+			}
+
+		});
+
+		Vue.component('refuge', Refuge)
+
+		new Vue({
+			el: '#App'
+		})
+
+	</script>
+
+</body>
+</html>
